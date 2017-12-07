@@ -39,6 +39,7 @@ class Canvas {
     echo "$separator\n {\n \"command\": \"".$command."\",\n";
     //if (sizeof($params)>0) {
       echo "   \"params\": {\n";
+      $i=0;
       foreach ($params as $key => $value) {
         if(++$i === sizeof($params)) {
           $comma = "";
@@ -117,8 +118,8 @@ class Canvas {
         ?>
         <style type="text/css">
         @font-face {
-            font-family: '<? echo $fontFamily; ?>';
-            src: url('<? echo $url; ?>') format('truetype');
+            font-family: '<?php echo $fontFamily; ?>';
+            src: url('<?php echo $url; ?>') format('truetype');
             font-weight: normal;
             font-style: normal;
         }

@@ -11,8 +11,10 @@
       $isJson = false;
     }
     if ($isJson) {
+      $baseUrl = "http://www.squix.org/espaper";
     	header('Content-Type: application/json');
     } else {
+      $baseUrl = "";
       header('Content-Type: image/svg+xml');
     }
   	$battery = $_GET['battery'] / 1024.0;
@@ -87,7 +89,7 @@
   		if ($temp > $max_temp) {
   			$max_temp = $temp;
   		}
-      $sum_temp += temp;
+      $sum_temp += $temp;
   		array_push($temps, $temp);
   	}
     $avg_temp = $sum_temp / sizeof($hourly);
