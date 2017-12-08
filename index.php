@@ -1,4 +1,4 @@
 <?php
-include("weatherstation.php");
-//include("demo.php")
-?>
+include 'weatherstation.php';
+// include 'demo.php';
+
