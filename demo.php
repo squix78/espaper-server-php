@@ -1,5 +1,7 @@
 <?php
 include 'ESPaperCanvas.php';
+include 'settings.php';
+
 $baseUrl = 'http://www.squix.org/espaper';
 
 $feed = implode(file('https://twitrss.me/twitter_user_to_rss/?user=squix78'));
@@ -9,7 +11,7 @@ $rss = json_decode($json);
 
 const BLACK = 0;
 const WHITE = 1;
-date_default_timezone_set('Europe/Zurich');
+date_default_timezone_set($DEFAULT_TIMEZONE);
 
 $output = $_GET['output'];
 $isJson = false;

@@ -1,8 +1,8 @@
 <?php
 include 'ESPaperCanvas.php';
+include 'settings.php';
 
-date_default_timezone_set('Europe/Zurich');
-$WUNDERGROUND_API_KEY = '!!!API KEY!!!';
+date_default_timezone_set($DEFAULT_TIMEZONE);
 
 $output = $_GET['output'];
 $isJson = false;
@@ -69,7 +69,7 @@ $meteocons = array(
     'nt_tstorms' => '&'
 );
 
-$json_string = file_get_contents('http://api.wunderground.com/api/' . $WUNDERGROUND_API_KEY . '/conditions/hourly/astronomy/q/CH/Zurich.json');
+$json_string = file_get_contents("http://api.wunderground.com/api/$WUNDERGROUND_API_KEY/conditions/hourly/astronomy/$WUNDERGROUND_LANGUAGE/q/$WUNDERGROUND_COUNTRY/$WUNDERGROUND_CITY.json");
 $result = json_decode($json_string);
 $condition = $result->{'current_observation'};
 $hourly = $result->{'hourly_forecast'};
@@ -120,7 +120,7 @@ $canvas->drawRect(293, 2, 1, 6);
 $canvas->fillRect(276, 2, round(14 * $percentage / 100), 6);
 $canvas->setTextAlignment('LEFT');
 $canvas->setFont('MeteoconsPlain42');
-$canvas->drawString(5, 20, $meteocons[$condition->{'icon'}]);
+$canvas->drawString(5, 10, $meteocons[$condition->{'icon'}]);
 $canvas->setFont('ArialPlain10');
 $canvas->drawString(55, 15, $condition->{'display_location'}->{'city'});
 $canvas->drawString(55, 50, $condition->{'weather'});
