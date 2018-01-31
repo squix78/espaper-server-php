@@ -1,8 +1,7 @@
 <?php
     include('ESPaperCanvas.php');
 
-    date_default_timezone_set("Europe/Zurich");
-    $WUNDERGROUND_API_KEY = "!!!API KEY!!!";
+    include('config.php');
 
     $output = $_GET["output"];
     if (!isset($output) || $output === "json") {
@@ -66,12 +65,11 @@
   		"nt_tstorms" => "&"
   	);
 
-  	$json_string = file_get_contents("http://api.wunderground.com/api/".$WUNDERGROUND_API_KEY."/conditions/hourly/astronomy/q/CH/Zurich.json");
+  	$json_string = file_get_contents("http://api.wunderground.com/api/".$WUNDERGROUND_API_KEY."/conditions/hourly/astronomy/q/".$WUNDERGROUND_QUERY);
   	$result = json_decode($json_string);
   	$condition = $result->{'current_observation'};
   	$hourly = $result->{'hourly_forecast'};
   	$astronomy = $result->{'moon_phase'};
-
 
   	$moon_age_char = chr(65 + 26 * (($astronomy->{'ageOfMoon'} % 30) / 30.0));
 
@@ -87,7 +85,7 @@
   		if ($temp > $max_temp) {
   			$max_temp = $temp;
   		}
-      $sum_temp += temp;
+                $sum_temp += $temp;
   		array_push($temps, $temp);
   	}
     $avg_temp = $sum_temp / sizeof($hourly);
@@ -110,7 +108,7 @@
 		$canvas->drawString(2, -2, "Updated: ".date("Y-m-d H:i:s"));
 		$canvas->drawLine(0, 11, 296, 11);
 		$canvas->setTextAlignment("RIGHT");
-		$canvas->drawString(274, -1, $voltage. "V ".$percentage."%");
+		$canvas->drawString(273, -1, $voltage. "V ".$percentage."%");
 		$canvas->drawRect(274, 0, 18, 10);
 		$canvas->drawRect(293, 2, 1, 6);
 		$canvas->fillRect(276, 2, round(14 * $percentage / 100), 6);
@@ -118,7 +116,11 @@
 		$canvas->setFont("MeteoconsPlain42");
 		$canvas->drawString(5, 20, $meteocons[$condition->{'icon'}]);
 		$canvas->setFont("ArialPlain10");
-		$canvas->drawString(55, 15, $condition->{'display_location'}->{'city'});
+		if (empty($CITY_OVERRIDE)) {
+			$canvas->drawString(55, 15, $condition->{'display_location'}->{'city'});
+		} else {
+			$canvas->drawString(55, 15, $CITY_OVERRIDE);
+		}
 		$canvas->drawString(55, 50, $condition->{'weather'});
 		$canvas->setFont("ArialPlain24");
 		$canvas->drawString(55, 25, $condition->{'temp_c'}."°C");

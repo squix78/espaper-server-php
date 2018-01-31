@@ -19,6 +19,7 @@ The library contains the following files:
 
 * ESPaperCanvas.php is the library you can use to create espaper-json objects
 * weatherstation.php is a server version of the espaper-weatherstaton. They produce nearly identical results on the espaper-json
+* config.php.sample is a sample config used by weatherstation.php. It should be copied as config.php and then edited
 * index.php is called by espaper. You can switch between applications by activating the appropriate include
 * demo.php is some kind of playground
 * Dockerfile - see "Docker support" below
