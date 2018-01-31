@@ -144,12 +144,13 @@
 		drawForecastDetail(296 / 2 +  64, 15, $hourly[6]);
 		drawForecastDetail(296 / 2 + 106, 15, $hourly[9]);
 
+
     function tempToPixel($height, $max, $min, $temp) {
-      return $temp * $height / ($max - $min);
+      return ($temp - $min) * $height / ($max - $min);
     }
 
 		for ($i = 0; $i < min(32, sizeof($temps)); $i++) {
-      $height = tempToPixel(13, $max_temp, $min_temp, $temps[$i]);
+      $height = tempToPixel(39, $max_temp, $min_temp, $temps[$i]);
 			$canvas->fillRect(200 + $i * 3, 116 - $height, 2, $height);
 	 	}
     $canvas->setTextAlignment("LEFT");
