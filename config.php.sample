@@ -1,0 +1,9 @@
+<?php
+    date_default_timezone_set("Europe/Zurich");
+
+    $WUNDERGROUND_API_KEY = "!!!API KEY!!!";
+
+    //sometime the cityname returned by wunderground doesn't make sense. use this to override:
+    $CITY_OVERRIDE = "Frankfurt";
+    
+?>

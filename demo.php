@@ -2,7 +2,7 @@
     include('ESPaperCanvas.php');
     $baseUrl = "http://www.squix.org/espaper";
 
-    $feed = implode(file('https://twitrss.me/twitter_user_to_rss/?user=squix78'));
+    $feed = implode(file('http://twitrss.me/twitter_user_to_rss/?user=squix78'));
     $xml = simplexml_load_string($feed);
     $json = json_encode($xml);
     $rss = json_decode($json);
@@ -24,6 +24,16 @@
       //header('Content-Type: application/json');
     }
 
+    $battery = $_GET['battery'] / 1024.0;
+    $voltage = round(($battery + 0.083) * 13 / 3.0, 2);
+    if ($voltage > 4.2) {
+      $percentage = 100;
+    } else if ($voltage < 3) {
+      $percentage = 0;
+    } else {
+      $percentage = round(($voltage - 3.2) * 100 / (4.2 - 3.0));
+    }
+
     $canvas = new Canvas(296, 128);
     $canvas->setJson($isJson);
     $canvas->start();
@@ -36,7 +46,7 @@
     $canvas->drawString(2, -2, "Updated: ".date("Y-m-d H:i:s"));
     $canvas->drawLine(0, 11, 296, 11);
     $canvas->setTextAlignment("RIGHT");
-    $canvas->drawString(274, -1, $voltage. "V ".$percentage."%");
+    $canvas->drawString(273, -1, $voltage. "V ".$percentage."%");
     $canvas->drawRect(274, 0, 18, 10);
     $canvas->drawRect(293, 2, 1, 6);
     $canvas->fillRect(276, 2, round(14 * $percentage / 100), 6);

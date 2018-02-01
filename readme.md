@@ -19,8 +19,10 @@ The library contains the following files:
 
 * ESPaperCanvas.php is the library you can use to create espaper-json objects
 * weatherstation.php is a server version of the espaper-weatherstaton. They produce nearly identical results on the espaper-json
+* config.php.sample is a sample config used by weatherstation.php. It should be copied as config.php and then edited
 * index.php is called by espaper. You can switch between applications by activating the appropriate include
 * demo.php is some kind of playground
+* Dockerfile - see "Docker support" below
 
 Before we even make the code available to the ESPaper we're going to start a local server to test the scripts. Make sure you have PHP installed and available on your command line tool. Then navigate to the folder of this repository and execute:
 ```
@@ -38,4 +40,17 @@ You can also remove the &output=json completely. Default is to render JSON. If y
 
 ## Font commands
 
-I will add here all the commands later on. For now just let me explain a bit about the font commands. For now all fonts have to be "backed" into the firmware. I am working on a feature which allows you to define new fonts on the server and then download them to the ESPaper. There is a bug in the SDK which causes failure for bigger font files.   
+I will add here all the commands later on. For now just let me explain a bit about the font commands. For now all fonts have to be "backed" into the firmware. I am working on a feature which allows you to define new fonts on the server and then download them to the ESPaper. There is a bug in the SDK which causes failure for bigger font files.
+
+## Docker support
+
+To build use the following command:
+```
+docker build . -t espaper-server-php:latest
+```
+
+Then start the container:
+```
+docker run -it -v $(pwd):/espaper-server-php -p 127.0.0.1:8080:8080 espaper-server-php:latest
+``` 
+and connect to 127.0.0.1:8080 like described above

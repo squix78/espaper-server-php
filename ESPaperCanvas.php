@@ -114,16 +114,14 @@ class Canvas {
       $this->fonts[$fontName] = $font;
       $this->font = $font;
       $url = $fontFolderUrl . $fontFamily . ".ttf";
-        ?>
-        <style type="text/css">
+      echo '<style type="text/css">
         @font-face {
-            font-family: '<? echo $fontFamily; ?>';
-            src: url('<? echo $url; ?>') format('truetype');
+            font-family: ' . $fontFamily . ';
+            src: url(' . $url . ') format(\'truetype\');
             font-weight: normal;
             font-style: normal;
         }
-        </style>
-        <?php
+        </style>';
 
     }
 
